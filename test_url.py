@@ -23,10 +23,20 @@ class UrlShortenerTests(unittest.TestCase):
         self.assertEqual(data["original_url"], self.url_to_shorten)
 
     def test_encode_missing_url_param(self):
-        return True
+        response = requests.post(f'{self.base_url}/encode', json={})
+        data = response.json()
+
+        self.assertEqual(response.status_code, 400)
+        self.assertIn('error', data)
+        self.assertEqual(data['error'], 'Missing "url" parameter')
 
     def test_decode_nonexistent_url(self):
-        return True
+        response = requests.get(f'{self.base_url}/decode/nonexistent')
+        data = response.json()
+
+        self.assertEqual(response.status_code, 404)
+        self.assertIn('error', data)
+        self.assertEqual(data['error'], 'Shortened URL not found')
 
 if __name__ == '__main__':
     unittest.main()

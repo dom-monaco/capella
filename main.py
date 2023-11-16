@@ -10,6 +10,9 @@ url_mapping = {}
 def encode():
     data = request.get_json()
 
+    if 'url' not in data:
+        return jsonify({'error': 'Missing "url" parameter'}), 400
+
     original_url = data['url']
     # Create a unique hash for the original URL to be used as the short version
     hash_object = hashlib.md5(original_url.encode())
