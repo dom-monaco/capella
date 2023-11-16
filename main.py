@@ -20,10 +20,14 @@ def encode():
 
     return jsonify({'short_url': f'http://short/{short_url}'})
 
+@app.route('/decode/<short_url>', methods=['GET'])
+def decode(short_url):
+    original_url = url_mapping.get(short_url)
 
-# @app.route('/decode/<short_url>', methods=['GET'])
-# def decode(short_url):
-    
+    if original_url is None:
+        return jsonify({'error': 'Shortened URL not found'}), 404
+
+    return jsonify({'original_url': original_url})
 
 if __name__ == '__main__':
     app.run(debug=True)

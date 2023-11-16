@@ -3,17 +3,24 @@ import requests
 
 class UrlShortenerTests(unittest.TestCase):
     base_url = 'http://127.0.0.1:5000'
+    url_to_shorten = 'http://www.example.com/thisisalongexample'
+    short_url = 'cb21edc2'
 
     def test_encode_url(self):
-        url_to_shorten = 'http://www.example.com/thisisalongexample'
-        response = requests.post(f'{self.base_url}/encode', json={'url': url_to_shorten})
+        response = requests.post(f'{self.base_url}/encode', json={'url': self.url_to_shorten})
         data = response.json()
 
         self.assertEqual(response.status_code, 200)
         self.assertIn('short_url', data)
 
     def test_decode_url(self):
-        return True
+        setup = requests.post(f'{self.base_url}/encode', json={'url': self.url_to_shorten})
+        response = requests.get(f'{self.base_url}/decode/{self.short_url}')
+        data = response.json()
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('original_url', data)
+        self.assertEqual(data["original_url"], self.url_to_shorten)
 
     def test_encode_missing_url_param(self):
         return True
