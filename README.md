@@ -5,16 +5,17 @@ Take home for capella space devops engineer.
 Encoding a URL such as http://anywebsite.com/app/docs and returns an encoded URL such as http://someapp/GeAi9K.
 
 ## API Usage
-### POST /encode
+#### POST /encode
 This endpoint takes an input URL and returns a shortened version of it.
 `{"url": "http://www.example.com/thisisalongexample"}`
 
-### GET /decode/<short-url>
+#### GET /decode/<short-url>
 This endpoint takes the shortened URL and returns the full URL.
 
 ## How to run
 Assumes working dir is root of project and python is in path, may need to run python3 cmd instead.
 ```
+pip install -r requirements.txt
 python main.py
 ```
 
